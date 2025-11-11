@@ -1,10 +1,10 @@
-# Module 0: The Absolute Basics - Laying the Foundation
+# Module 0: The Absolute Basics
 
-### 🎯 Objective
+## 🎯 Objective
 
 Your objective in this module is to establish a foundational understanding of how websites function and grasp the essential programming concepts required for test automation. We'll ensure that even if you're an absolute beginner, you'll build a clear mental model before you start writing any code.
 
-### 📝 Lesson Plan
+## 📝 Lesson Plan
 
 | Topic | Description | Duration |
 | :--- | :--- | :--- |
@@ -13,9 +13,9 @@ Your objective in this module is to establish a foundational understanding of ho
 | **What Programming Do I Need?** | The "Bare Minimum" concepts. | 45 mins |
 | **Q&A** | Open floor for questions. | 10 mins |
 
-### 📖 Content
+## 📖 Content
 
-#### What is a Website? The House Analogy
+### What is a Website? The House Analogy
 
 Before we can test a website, we need to know what it's made of. Think of a website like a house:
 
@@ -38,7 +38,7 @@ Before we can test a website, we need to know what it's made of. Think of a webs
 
 Our job in test automation is to be the "home inspector." We don't need to be the architect (HTML), the interior designer (CSS), or the electrician (JS), but we *do* need to know how to open the doors, flip the switches, and check that everything works as expected.
 
-#### What Programming Do I Need? The Bare Minimum
+### What Programming Do I Need? The Bare Minimum
 
 You do not need to be a professional developer to write tests! You only need a few core concepts. Think of them as your basic toolkit.
 
