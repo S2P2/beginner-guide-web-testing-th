@@ -18,6 +18,7 @@ In this module, your objective is to understand what automated testing is and wh
 #### What is Automated Testing?
 
 Imagine you have a robot colleague. Your job is to test a web form. Manually, you would have to:
+
 1.  Open the browser.
 2.  Type the website address.
 3.  Find the name field and type a name.

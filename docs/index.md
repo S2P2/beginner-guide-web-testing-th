@@ -2,7 +2,7 @@
 icon: lucide/house
 ---
 
-# Introduction: Your Journey into Web Test Automation
+# Your Journey into Web Test Automation
 
 ### 👋 Welcome!
 
