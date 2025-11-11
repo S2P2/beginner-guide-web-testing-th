@@ -1,5 +1,8 @@
 # Module 5: Handling the "Real" Web (Waits)
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this module, you will learn why automated tests can be "flaky" and, more importantly, how to write stable and reliable tests by correctly handling waits. We will use dynamic elements on `demoqa.com` to clearly illustrate both the problem and its solution.

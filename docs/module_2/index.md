@@ -1,5 +1,8 @@
 # Module 2: Getting Your Tools Ready
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this module, your objective is to overcome the first major hurdle: software installation and project setup. You will learn how to set up your development environment, familiarize yourself with our demo application, and get your project to a "ready to code" state.

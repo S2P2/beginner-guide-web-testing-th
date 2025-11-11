@@ -1,5 +1,8 @@
 # Module 4: Writing Your First Full Test
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this module, you will combine the building blocks from Module 3 to write your first complete, structured test. You will learn the "Arrange, Act, Assert" pattern as a formal structure for creating clean and understandable tests.

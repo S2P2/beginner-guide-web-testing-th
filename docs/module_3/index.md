@@ -1,5 +1,8 @@
 # Module 3: The 3 Core Building Blocks of Automation
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this crucial hands-on module, you will master the "Find, Act, Assert" pattern and gain practical experience writing the three fundamental lines of any test. The interactive code-switcher will be an essential tool to help you apply these concepts across different frameworks.
