@@ -1,139 +1,134 @@
 ---
-title: Understanding structure (HTML & DOM)
+title: ทำความเข้าใจโครงสร้าง (HTML & DOM)
 ---
 
-# A Deeper Look at "The House"—HTML & the DOM for Testers
+# ทำความเข้าใจโครงสร้าง (HTML & DOM)
 
-Let's expand on our "House" analogy. Before a house is built, you start with a **blueprint**. This blueprint shows the foundation, the different floors, and every room, door, and window. It defines the entire structure.
+!!! warning "ข้อควรระวัง"
+    บทความแปลด้วย AI อัตโนมัติ อาจมีข้อผิดพลาด ยังไม่ได้ตรวจทาน
 
-For a website, the raw HTML code is that initial blueprint.
+## มองลึกเข้าไปในเรื่อง "บ้าน"—HTML และ DOM สำหรับผู้ทดสอบ
 
-## **The Basic Blueprint of Every Web Page**
+มาขยายความจากการเปรียบเทียบ "บ้าน" กันต่อไป ก่อนที่จะสร้างบ้าน คุณต้องเริ่มต้นด้วย **แบบบ้าน** ซึ่งแสดงรากฐาน ชั้นต่างๆ และห้อง ประตู หน้าต่างทุกบาน แบบบ้านนี้กำหนดโครงสร้างทั้งหมด
 
-Nearly every website on the internet is built on this fundamental structure. Don't worry about memorizing it; just understand the main sections.
+สำหรับเว็บไซต์ โค้ด HTML ดิบนั้นคือแบบบ้านเบื้องต้นนั่นเอง
+
+## **แบบบ้านพื้นฐานของหน้าเว็บทุกหน้า**
+
+เกือบทุกเว็บไซต์บนอินเทอร์เน็ตถูกสร้างขึ้นบนโครงสร้างพื้นฐานนี้ อย่ากังวลเรื่องการจำ เพียงแค่เข้าใจส่วนหลักๆ
 
 ```html
 <!DOCTYPE html>
 <html>
-  <!-- This is the 'behind-the-scenes' area -->
+  <!-- นี่คือพื้นที่ "หลังบ้าน" -->
   <head>
-    <title>My Awesome Website</title> <!-- This is the text that appears in the browser tab -->
+    <title>เว็บไซต์ที่ยอดเยี่ยมของฉัน</title> <!-- นี่คือข้อความที่ปรากฏในแท็บเบราว์เซอร์ -->
   </head>
 
-  <!-- This is the VISIBLE part of the house -->
+  <!-- นี่คือส่วนที่ "มองเห็น" ของบ้าน -->
   <body>
-    <h1>Welcome to My Page!</h1>
-    <p>Please enter your details below.</p>
+    <h1>ยินดีต้อนรับสู่หน้าของฉัน!</h1>
+    <p>กรุณากรอกรายละเอียดของคุณด้านล่าง</p>
 
     <input type="text" id="username-input" name="username">
-    <button id="submit-button">Click Me</button>
+    <button id="submit-button">คลิกฉัน</button>
   </body>
 </html>
 ```
 
-Think of this structure like a house blueprint:
+นึกถึงโครงสร้างนี้เหมือนแบบบ้าน:
 
-* `<html>...</html>`: This is the entire property line. Everything is inside this.
-* `<head>...</head>`: This is the "inspector's office" or the "utility room." It contains important information *about* the page (like the title for the browser tab), but it's not the part users interact with directly. You will rarely test things here.
-* `<body>...</body>`: **This is the main house.** It contains everything you can see and interact with: the text, the images, the forms, and the buttons.
+- `<html>...</html>`: นี่คือขอบเขตทั้งหมด ทุกอย่างอยู่ข้างใน
+- `<head>...</head>`: นี่คือ "สำนักงานสอบสวน" หรือ "ห้องเก็บของ" มันประกอบด้วยข้อมูลสำคัญ *เกี่ยวกับ* หน้า (เช่น ชื่อเรื่องของแท็บเบราว์เซอร์) แต่ไม่ใช่ส่วนที่ผู้ใช้โต้ตอบโดยตรง คุณจะแทบไม่ทดสอบสิ่งใดที่นี่
+- `<body>...</body>`: **นี่คือบ้านหลัก** มันประกอบด้วยทุกสิ่งที่คุณเห็นและโต้ตอบได้: ข้อความ รูปภาพ แบบฟอร์ม และปุ่ม
 
-> **As a tester, you will spend 99% of your time working with elements inside the `<body>` tag.**
+> **ในฐานะผู้ทดสอบ คุณจะใช้เวลา 99% ของคุณกับองค์ประกอบภายในแท็บ `<body>` **
 
-Excellent point. You've hit on one of the biggest hurdles for beginners: the DOM feels like a vague, invisible concept.
+## **จากแบบบ้านไปยังการสร้างจริง: การแนะนำ DOM**
 
-The best way to make it concrete is to show them how to **see it and interact with it themselves** using their own browser. We can also use a visual analogy, like a family tree.
+เมื่อเบราว์เซอร์เช่น Chrome หรือ Firefox อ่านแบบบ้าน HTML ของคุณ มันจะสร้างเวอร์ชันแบบไดนามิกของมันในหน่วยความจำ โครงสร้าง "มีชีวิต" นี้เรียกว่า **DOM (Document Object Model)**
 
-Here is a revised section that directly addresses this by introducing a visualization and a practical exercise.
+DOM คือสิ่งที่เครื่องมือทดสอบของคุณโต้ตอบกับจริงๆ แต่จริงๆ แล้วมันดูเหมือนไร?
 
-## **From Blueprint to Building: Introducing the DOM**
+## **การมองเห็น DOM: แผนภูมิครอบครัว**
 
-When a browser like Chrome or Firefox reads your HTML blueprint, it builds a live, interactive version of it in memory. This "living structure" is called the **DOM (Document Object Model)**.
+วิธีที่ดีที่สุดในการมองเห็น DOM คือการมองว่ามันเป็นโครงสร้างแบบต้นไม้ เหมือนแผนภูมิครอบครัว องค์ประกอบ `<html>` คือบรรพบุรุษที่ยิ่งใหญ่ที่สุด `<body>` และ `<head>` เป็นลูก และปุ่ม ย่อหน้า และข้อมูลเข้าทั้งหมดเป็นลูกหลาน
 
-The DOM is what your automation tool actually interacts with. But what does it actually *look like*?
-
-## **Visualizing the DOM: The Family Tree**
-
-The best way to visualize the DOM is as a tree structure, like a family tree. The `<html>` element is the great-ancestor of everything. The `<body>` and `<head>` are its children, and all the buttons, paragraphs, and inputs are descendants.
-
-Using our simple HTML example:
+ใช้ตัวอย่าง HTML ง่ายๆ ของเรา:
 
 ```html
 <body>
-  <h1>Welcome to My Page!</h1>
-  <button id="submit-button">Click Me</button>
+  <h1>ยินดีต้อนรับสู่หน้าของฉัน!</h1>
+  <button id="submit-button">คลิกที่นี่</button>
 </body>
 ```
 
-The browser sees this and builds a DOM tree that looks like this:
+เบราว์เซอร์จะเห็นสิ่งนี้และสร้างแผนภูมิ DOM ที่มีลักษณะดังนี้:
 
 ``` mermaid
 graph TD
     body[body]
     h1[h1]
     button[button]
-    text1["Welcome..."]
-    text2["Click Me"]
+    text1["ยินดีต้อนรับ..."]
+    text2["คลิกที่นี่"]
 
     body --> h1
     body --> button
     h1 --> text1
     button --> text2
-
 ```
 
-This structure is critical because it contains relationships. Your test script can ask the browser to find "the `button` that is a child of the `body`." This parent-child relationship is the key to how modern test automation tools find elements.
+โครงสร้างนี้สำคัญเพราะมันมีความสัมพันธ์ สคริปต์ทดสอบของคุณสามารถขอให้เบราว์เซอร์ค้นหา "ปุ่มที่เป็นลูกของ `<body>`" ความสัมพันธ์ระหว่างพ่อแม่-ลูกนี้คือกุญแจสำหรับวิธีที่เครื่องมือทดสอบอัตโนมัติสมัยใหม่ค้นหาองค์ประกอบ
 
-## **How to See the DOM Yourself (Your First Tester Skill!)**
+## **วิธีดู DOM ด้วยตัวเอง (ทักษะผู้ทดสอบแรกของคุณ!)**
 
-The DOM isn't just a theoretical concept; you can see and explore the live DOM of any website using your browser's built-in Developer Tools. Learning this is the **single most important foundational skill** for an automation tester.
+DOM ไม่ใช่เพียงแนวคิดทางทฤษฎี คุณสามารถเห็นและสำรวจ DOM แบบไลฟ์ของเว็บไซต์ใดๆ ได้โดยใช้เครื่องมือสำหรับนักพัฒนาที่สร้างเข้ามาในเบราว์เซอร์ของคุณ การเรียนรู้นี้เป็น **ทักษะพื้นฐานที่สำคัญที่สุด** สำหรับผู้ทดสอบอัตโนมัติ
 
-Let's try it:
+ลองดู:
 
-1.  **Open Any Web Page:** Go to any website. It could be Google, Wikipedia, or any other site.
+1. **เปิดหน้าเว็บ:** ไปที่เว็บไซต์ใดก็ได้ อาจเป็น Google Wikipedia หรือไซต์อื่นๆ
 
-2.  **Right-Click and Inspect:** Find an element on the page you're curious about, like a button or a search box. **Right-click** on it, and from the menu that appears, select **Inspect**.
+2. **คลิกขวาและตรวจสอบ:** ค้นหาองค์ประกอบบนหน้าที่คุณสนใจ เช่น ปุ่มหรือกล่องค้นหา **คลิกขวา** บนมัน และจากเมนูที่ปรากฏ เลือก **Inspect** (ตรวจสอบ)
 
+3. **ค้นพบ DOM:** แผงใหม่จะเปิดขึ้นที่ด้านข้างหรือด้านล่างของเบราว์เซอร์ นี่คือ **Developer Tools** (เครื่องมือสำหรับนักพัฒนา) คุณจะอยู่ในแท็บชื่อ **Elements** (องค์ประกอบ)
 
+สิ่งที่คุณกำลังมองดูในแท็บ **Elements** **คือ DOM** มันดูเหมือนโค้ด HTML ดั้งเดิม แต่มันคือเวอร์ชันแบบไลฟ์ปัจจุบัน คุณจะเห็นบางสิ่งเกิดขึ้น:
 
-3.  **Discover the DOM:** A new panel will open up on the side or bottom of your browser. This is the **Developer Tools**. You will be on a tab called **Elements**.
+- โค้ดที่ตรงกับองค์ประกอบที่คุณคลิกขวาจะถูกเน้น
+- เมื่อคุณเลื่อนเมาส์ของคุณไปยังโค้ดต่างๆ ในแผง Elements องค์ประกอบที่มองเห็นได้ที่ตรงกันบนหน้าเว็บจริงจะถูกเน้น
 
-What you are looking at in the **Elements** tab **is the DOM**. It looks like the original HTML, but it's the live, current version. You'll see a few things happen:
+ลิงก์โต้ตอบโดยตรงนี้ระหว่างโค้ดและหน้าเว็บที่มองเห็นได้คือวิธีที่คุณจะค้นหา "ที่อยู่" (`id`, `class` เป็นต้น) ที่คุณต้องการเขียนทดสอบของคุณ ก่อนที่คุณจะสามารถเขียนสคริปต์เพื่อคลิกปุ่ม คุณต้องใช้ Inspector ก่อนเพื่อค้นหาที่อยู่เฉพาะตัวของมันใน DOM
 
-*   The line of code corresponding to the element you right-clicked will be highlighted.
-*   As you move your mouse over different lines of code in the Elements panel, the corresponding visual element will be highlighted on the actual webpage.
+??? note "หมายเหตุเพิ่มเติม: แล้ว "บ้านอัจฉริยะ" ที่สร้างด้วย React หรือ Vue ล่ะ?"
 
-This direct, interactive link between the code and the visual page is how you will find the "addresses" (`id`, `class`, etc.) you need to write your tests. Before you can write a script to click a button, you must first use the Inspector to find its unique address in the DOM.
+    คุณอาจเคยได้ยินเกี่ยวกับเว็บไซต์สมัยใหม่ที่สร้างด้วยเฟรมเวิร์ก เช่น **React** หรือ **Vue** โครงสร้างเหล่านี้มีความสัมพันธ์กับการเปรียบเทียบบ้านของเรา อย่างไร?
 
-??? note "Advanced Note: What About a 'Smart House' Built with React or Vue?"
+    นึกถึงด้วยวิธีนี้:
 
-    You might have heard of modern websites built with frameworks like **React** or **Vue**. How do these fit into our house analogy?
+    - **เว็บไซต์แบบดั้งเดิม** เหมือนบ้านที่สร้างจากแบบบ้านยักษ์ชิ้นเดียว ทีมก่อสร้างสร้างมันครั้งเดียว และเสร็จแล้ว
+    - **เว็บไซต์เฟรมเวิร์ก "สมัยใหม่"** เหมือนบ้าน "อัจฉริยะ" ที่ **ผู้รับเหมาวิเศษ** ประกอบขึ้น
 
-    Think of it this way:
+    นักพัฒนาไม่ให้ผู้รับเหมาแบบบ้านยักษ์ชิ้นเดียว แต่เขาให้หนังสือแบบบ้านขนาดเล็กสำหรับส่วนต่างๆ: "แบบห้องครัว" "แบบหน้าต่าง" "แบบสวิตช์ไฟ"
 
-    *   **A traditional website** is like a house built from a single, giant blueprint. The construction crew builds it once, and it's finished.
-    *   **A modern "framework" website** is like a high-tech "smart house" assembled by a **magical contractor**.
+    ผู้รับเหมาวิเศษ (React) อ่านคำแนะนำเหล่านี้และสร้างบ้าน (DOM) ขึ้นมาทันทีให้คุณเห็น เวทมนตร์คือผู้รับเหมานี้สามารถเปลี่ยนบ้านได้ในพริบตา เมื่อคุณเปิดสวิตช์ไฟ ผู้รับเหมาอาจไม่เพียงแค่เปิดไฟ—มันอาจแทนที่ผนังด้วยหน้าต่างทันทีหรือเพิ่มประตูใหม่
 
-    The developer doesn't give the contractor one giant blueprint. Instead, they provide a book of smaller blueprints for individual parts: a "kitchen blueprint," a "window blueprint," a "light switch blueprint."
+    #### **สิ่งนี้หมายความว่าอย่างไรสำหรับคุณ (ผู้ตรวจสอบบ้าน)**
 
-    The Magical Contractor (React) reads these instructions and instantly builds the house (the DOM) for you to see. The magic is that this contractor can change the house in the blink of an eye. When you flip a light switch, the contractor might not just turn on a light—it might instantly replace a wall with a window or add a new door.
+    ไม่ว่าบ้านจะสร้างด้วยวิธีใด—โดยทีมแบบดั้งเดิมหรือผู้รับเหมาวิเศษ—คุณก็แค่ตรวจสอบบ้านที่เสร็จแล้วเท่านั้น เบราว์เซอร์จะเห็นผลิตภัณฑ์สุดท้ายเท่านั้น (HTML DOM)
 
-    #### **What This Means for You (The Home Inspector)**
+    อย่างไรก็ตาม การตรวจสอบ "บ้านอัจฉริยะ" มีความท้าทายใหม่สองประการ:
 
-    No matter how the house was built—with a traditional crew or a magical contractor—you are still just inspecting a finished house. The browser only ever sees the final product (the HTML DOM).
+    1. **คุณต้องอดทน** เพราะบ้านสามารถเปลี่ยนแปลงได้ทันทีคุณต้องระวัง หากคุณกดเปิดประตูโรงรถ คุณไม่สามารถตรวจสอบว่ารถอยู่ข้างนอกในพริบตาเดียวกันได้ คุณต้อง **รอ** ให้ประตูเปิดเสร็จสิ้นก่อน นั่นคือเหตุผลที่แนวคิด `async/await` สำคัญมากสำหรับการทดสอบสมัยใหม่ คุณตลอดเวลาบอกให้สคริปต์ของคุณ "รอให้เวทมนตร์เสร็จสิ้นก่อนที่คุณจะตรวจสอบผลลัพธ์"
 
-    However, inspecting a "smart house" has two new challenges:
+    2. **ป้ายชื่ออาจแปลก** ผู้รับเหมาวิเศษทำงานอย่างรวดเร็ว ซึ่งบางครั้งมันใช้หมายเลขซีเรียลชั่วคราวเพื่อติดป้ายชื่อส่วนต่างๆ (เช่น `class="wall-7b3x-9c1a"`) ป้ายชื่อเหล่านี้อาจเปลี่ยนไปในวันถัดไป! ในฐานะผู้ตรวจสอบ คุณเรียนรู้ที่จะไม่สนใจป้ายชื่อชั่วคราวเหล่านี้ และมองหาป้ายชื่อที่ถาวรมากขึ้น เช่น `id` ที่เป็นเอกลักษณ์ ("main-entrance-door") ที่นักพัฒนาวางไว้โดยจงใจ
 
-    1.  **You Must Be Patient.** Because the house can change instantly, you have to be careful. If you press a garage door opener, you can't check if the car is outside in the same split second. You must **wait** for the door to finish opening first. This is why the `async/await` concept is so critical for modern testing. You're constantly telling your script, "Wait for the magic to finish before you check the result."
+    **สาระสำคัญ:** งานของคุณคือตรวจสอบบ้านที่เสร็จแล้ว (DOM) เสมอโดยใช้เครื่องมือ "Inspect" ของเบราว์เซอร์ ทักษะพื้นฐานที่คุณกำลังเรียนรู้ที่นี่คือพื้นฐานสำหรับการทดสอบ *เว็บไซต์ใด* ตั้งแต่ที่ง่ายที่สุดไปจนถึงที่มีเวทมนตร์มากที่สุด
 
-    2.  **The Labels Can Be Strange.** The magical contractor works so fast that it sometimes uses temporary serial numbers to label parts (like `class="wall-7b3x-9c1a"`). These labels might change the next day! As an inspector, you learn to ignore these temporary labels and look for more permanent ones, like a unique `id` ("main-entrance-door") that the developer put there on purpose.
+## ➡️ ต่อไป: นำบ้านมาเป็นชีวิต — การเขียนโปรแกรมสำหรับผู้ทดสอบ
 
-    **The Bottom Line:** Your job is always to inspect the final house (the DOM) using your browser's "Inspect" tool. The fundamental skills you are learning here are the foundation for testing *any* kind of website, from the simplest to the most magical.
+ตอนนี้คุณได้เชี่ยวชาญการ **เห็น** และ **ตรวจสอบ** หน้าเว็บ—"บ้าน" เองแล้ว
 
+ต่อไป เราจะเรียนรู้วิธีการ **โต้ตอบ** กับมันผ่านโค้ด
 
-
-## ➡️ Next: Bringing the House to Life — Programming for Testers
-
-You’ve now mastered how to **see** and **inspect** a web page — the “house” itself.
-Next, we’ll learn how to **interact** with it through code.
-
-In the following module, we’ll explore key programming concepts — variables, conditions, and locators — that allow your test scripts to **open doors, press buttons, and verify everything works.**
+ในโมดูลต่อไป เราจะสำรวจแนวคิดการเขียนโปรแกรมสำคัญ—ตัวแปร เงื่อนไข และตัวระบุ—ที่ให้สคริปต์ทดสอบของคุณ **เปิดประตู กดปุ่ม และตรวจสอบว่าทุกอย่างใช้งานได้**
