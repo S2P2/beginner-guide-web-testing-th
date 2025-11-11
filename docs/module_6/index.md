@@ -1,5 +1,8 @@
 # Module 6: Organizing Tests for Growth
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this module, you will learn best practices for organizing your tests to make them clean, maintainable, and scalable. You will move beyond writing single scripts and begin to think about structuring a full test suite using industry-standard patterns.

@@ -1,5 +1,5 @@
 ---
-title: HTML & DOM - The House
+title: Understanding structure (HTML & DOM)
 ---
 
 # A Deeper Look at "The House"—HTML & the DOM for Testers
@@ -97,9 +97,10 @@ Let's try it:
 
 3.  **Discover the DOM:** A new panel will open up on the side or bottom of your browser. This is the **Developer Tools**. You will be on a tab called **Elements**.
 
-    What you are looking at in the "Elements" tab **is the DOM**. It looks like the original HTML, but it's the live, current version. You'll see a few things happen:
-    *   The line of code corresponding to the element you right-clicked will be highlighted.
-    *   As you move your mouse over different lines of code in the Elements panel, the corresponding visual element will be highlighted on the actual webpage.
+What you are looking at in the **Elements** tab **is the DOM**. It looks like the original HTML, but it's the live, current version. You'll see a few things happen:
+
+*   The line of code corresponding to the element you right-clicked will be highlighted.
+*   As you move your mouse over different lines of code in the Elements panel, the corresponding visual element will be highlighted on the actual webpage.
 
 This direct, interactive link between the code and the visual page is how you will find the "addresses" (`id`, `class`, etc.) you need to write your tests. Before you can write a script to click a button, you must first use the Inspector to find its unique address in the DOM.
 
@@ -127,3 +128,12 @@ This direct, interactive link between the code and the visual page is how you wi
     2.  **The Labels Can Be Strange.** The magical contractor works so fast that it sometimes uses temporary serial numbers to label parts (like `class="wall-7b3x-9c1a"`). These labels might change the next day! As an inspector, you learn to ignore these temporary labels and look for more permanent ones, like a unique `id` ("main-entrance-door") that the developer put there on purpose.
 
     **The Bottom Line:** Your job is always to inspect the final house (the DOM) using your browser's "Inspect" tool. The fundamental skills you are learning here are the foundation for testing *any* kind of website, from the simplest to the most magical.
+
+
+
+## ➡️ Next: Bringing the House to Life — Programming for Testers
+
+You’ve now mastered how to **see** and **inspect** a web page — the “house” itself.
+Next, we’ll learn how to **interact** with it through code.
+
+In the following module, we’ll explore key programming concepts — variables, conditions, and locators — that allow your test scripts to **open doors, press buttons, and verify everything works.**

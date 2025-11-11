@@ -1,5 +1,8 @@
 # Module 1: The "What" and "Why" of Automated Testing
 
+!!! warning
+    AI generated content, no human review yet
+
 ### 🎯 Objective
 
 In this module, your objective is to understand what automated testing is and why it's so valuable. We will explore its core concepts and answer the crucial question: "Why is this worth learning?"
