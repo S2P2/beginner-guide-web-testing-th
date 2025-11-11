@@ -1,164 +1,166 @@
 ---
-title: Basic programming for testers
+title: การเขียนโปรแกรมพื้นฐานสำหรับผู้ทดสอบ
 ---
 
-# More about programming
+# การเขียนโปรแกรมพื้นฐานสำหรับผู้ทดสอบ
 
-Welcome to the deeper dive! In the main module, we introduced the "bare minimum" concepts. Here, we'll expand on them with more practical examples and add a crucial new tool to your kit. The goal is to show you not just *what* they are, but *why* they are essential for automated testing.
+!!! warning "ข้อควรระวัง"
+    บทความแปลด้วย AI อัตโนมัติ อาจมีข้อผิดพลาด ยังไม่ได้ตรวจทาน
 
-### **1. Variables: Storing Your Evidence**
+ยินดีต้อนรับสู่การศึกษาเชิงลึก! ในโมดูลหลัก เราแนะนำแนวคิด "ขั้นต่ำ" ที่จำเป็น ที่นี่ เราจะขยายแนวคิดเหล่านั้นด้วยตัวอย่างที่ใช้งานได้จริงและเพิ่มเครื่องมือที่สำคัญใหม่ลงในชุดทักษะของคุณ เป้าหมายคือแสดงให้คุณเห็นไม่เพียงแต่ *อะไร* พวกมัน แต่ *ทำไม* พวกมันจึงจำเป็นสำหรับการทดสอบอัตโนมัติ
 
-As we covered, variables are labeled boxes for storing information. In testing, you'll use them constantly to store data you retrieve from the website to check if it's correct.
+## **1. ตัวแปร: เก็บหลักฐานของคุณ**
 
-| Data Type | Description | Example Test Scenario | Code Example |
+ดังที่เรากล่าวไป ตัวแปรคือกล่องที่มีป้ายกำกับสำหรับเก็บข้อมูล ในการทดสอบ คุณจะใช้ตัวแปรอย่างต่อเนื่องเพื่อเก็บข้อมูลที่คุณดึงมาจากเว็บไซต์เพื่อตรวจสอบว่าถูกต้อง
+
+| ประเภทข้อมูล | คำอธิบาย | สถานการณ์ทดสอบ | ตัวอย่างโค้ด |
 | :--- | :--- | :--- | :--- |
-| **String** | A piece of text. | Store the welcome message after login to verify it says "Welcome, User!" | `let welcomeMessage = await page.textContent("#welcome-banner");` |
-| **Number** | A whole number or decimal. | Store the number of items in a shopping cart. | `let itemCount = await page.locator(".cart-item").count();` |
-| **Boolean** | A simple `true` or `false` value. | Check if an error message is visible on the page. | `let isErrorVisible = await page.isVisible("#login-error");` |
+| **String (สตริง)** | ข้อความชิ้นหนึ่ง | เก็บข้อความยินดีต้อนรับหลังจากเข้าสู่ระบบเพื่อตรวจสอบว่าระบุว่า "ยินดีต้อนรับ ผู้ใช้!" | `let welcomeMessage = await page.textContent("#welcome-banner");` |
+| **Number (ตัวเลข)** | ตัวเลขทั้งหมดหรือทศนิยม | เก็บจำนวนรายการในตะกร้าสินค้า | `let itemCount = await page.locator(".cart-item").count();` |
+| **Boolean (บูลีน)** | ค่า `true` หรือ `false` ง่ายๆ | ตรวจสอบว่าข้อความข้อผิดพลาดมองเห็นได้บนหน้า | `let isErrorVisible = await page.isVisible("#login-error");` |
 
-**Why this matters for testing:** Your test isn't just about clicking buttons; it's about making **assertions**. You'll store the actual result from the website in a variable and then compare it to your expected result.
+**ทำไมนี่จึงสำคัญสำหรับการทดสอบ:** การทดสอบของคุณไม่ได้เพียงแค่เกี่ยวกับการคลิกปุ่ม มันเกี่ยวกับการสร้าง **ข้อความยืนยัน** คุณจะเก็บผลลัพธ์จริงจากเว็บไซต์ไว้ในตัวแปร และจากนั้นเปรียบเทียบกับผลลัพธ์ที่คาดไว้
 
-### **2. Conditions: The Fork in the Road**
+## **2. เงื่อนไข: ทางเลือกที่แยกออกมา**
 
-Is the concept of "conditions" necessary? **Yes, absolutely.** Automated tests often need to make decisions, just like a manual tester would. A condition allows your script to take a different path based on what it sees on the page.
+เงื่อนไขเป็นแนวคิดที่จำเป็นหรือไม่? **ใช่ อย่างแน่นอน** การทดสอบอัตโนมัติมักต้องการตัดสินใจ เช่นเดียวกับสิ่งที่ผู้ทดสอบด้วยตนเองจะทำ เงื่อนไขช่วยให้สคริปต์ของคุณเลือกเส้นทางที่แตกต่างกันตามสิ่งที่มองเห็นบนหน้า
 
-Think of it as a fork in the road. You use an `if` statement to check a condition.
-*   **`if`** the condition is `true`, you go down one path.
-*   **`else`**, you go down the other.
+ลองคิดว่ามันเป็นทางแยก คุณใช้คำสั่ง `if` เพื่อตรวจสอบเงื่อนไข
+*   **`if`** (ถ้า) เงื่อนไขเป็น `true` คุณไปทางหนึ่ง
+*   **`else`** (ไม่เช่นนั้น) คุณไปทางอื่น
 
-This is critical for building robust tests that don't fail brittlely.
+นี่สำคัญอย่างยิ่งต่อการสร้างการทดสอบที่แข็งแกร่งซึ่งไม่ล้มเหลวได้ง่าย
 
-**Example Scenario:** Imagine a "Delete" button that shows a confirmation pop-up. Your test needs to check if the pop-up appears and then click "OK".
+**สถานการณ์ตัวอย่าง:** ลองนึกภาพปุ่ม "ลบ" ที่แสดงป๊อปอัปยืนยัน การทดสอบของคุณต้องตรวจสอบว่าป๊อปอัปปรากฏขึ้นหรือไม่ แล้วคลิก "ตกลง"
 
 ```javascript
-// Click the main delete button
+// คลิกปุ่มลบหลัก
 await page.click("#delete-item-button");
 
-// Use a condition to check if the confirmation pop-up appeared
+// ใช้เงื่อนไขเพื่อตรวจสอบว่าป๊อปอัปยืนยันปรากฏขึ้นหรือไม่
 const isPopupVisible = await page.isVisible("#confirm-popup");
 
 if (isPopupVisible) {
-  // This path runs ONLY if the popup is visible
-  console.log("Confirmation popup appeared. Clicking OK.");
+  // เส้นทางนี้ทำงานเฉพาะเมื่อป๊อปอัปมองเห็นได้
+  console.log("ป๊อปอัปยืนยันปรากฏขึ้น กำลังคลิกตกลง");
   await page.click("#confirm-ok-button");
 } else {
-  // This path runs if the popup did NOT appear
-  console.log("ERROR: Confirmation popup did not appear!");
-  // Here you would typically fail the test
+  // เส้นทางนี้ทำงานถ้าป๊อปอัปไม่ปรากฏ
+  console.log("ข้อผิดพลาด: ป๊อปอัปยืนยันไม่ปรากฏ!");
+  // ที่นี่คุณมักจะทำให้การทดสอบล้มเหลว
 }
 ```
 
-Without conditions, your script would blindly try to click the "OK" button and would crash if the pop-up never appeared, giving you a less clear error message.
+หากไม่มีเงื่อนไข สคริปต์ของคุณจะพยายามคลิกปุ่ม "ตกลง" ตามตรงและจะขัดข้องหากป๊อปอัปไม่เคยปรากฏ ทำให้เกิดข้อความข้อผิดพลาดที่ชัดเจนน้อยกว่า
 
-### **3. Locators: Your GPS for Finding Web Elements**
+## **3. Locators (ตัวค้นหา): GPS ของคุณสำหรับการค้นหาองค์ประกอบเว็บ**
 
-Before you can interact with an element, you must find it. Locators (or selectors) are the instructions you give your testing tool to find a unique element on the page.
+ก่อนที่คุณจะสามารถโต้ตอบกับองค์ประกอบได้ คุณต้องค้นหามันก่อน Locators (หรือ selectors) คือคำสั่งที่คุณให้แก่เครื่องมือทดสอบของคุณเพื่อค้นหาองค์ประกอบที่ไม่ซ้ำกันบนหน้า
 
-#### **CSS Selectors**
+### **CSS Selectors (ตัวเลือก CSS)**
 
-CSS Selectors are the most common and powerful way to find elements. They use the same syntax that developers use to apply styles (CSS). Here are the ones you will use 95% of the time.
+CSS Selectors เป็นวิธีที่ใช้บ่อยที่สุดและทรงพลังที่สุดในการค้นหาองค์ประกอบ พวกมันใช้ไวยากรณ์เดียวกันที่นักพัฒนาใช้ในการใช้สไตล์ (CSS) นี่คือสิ่งที่คุณจะใช้ 95% ของเวลา
 
-| Selector Type | Syntax | HTML Example | Locator Code |
+| ประเภท Selector | ไวยากรณ์ | ตัวอย่าง HTML | โค้ด Locator |
 | :--- | :--- | :--- | :--- |
 | **ID** | `#id` | `<button id="main-login-btn">Login</button>` | `"#main-login-btn"` |
 | **Class** | `.classname` | `<p class="error-message">Invalid.</p>` | `".error-message"` |
 | **Attribute** | `[attr="val"]` | `<input name="username" />` | `"[name='username']"` |
 | **Test ID** | `[data-testid="val"]` | `<a data-testid="forgot-password">...</a>` | `"[data-testid='forgot-password']"` |
 
-??? note "Advanced Locators: Using Relationships with CSS Combinators"
+**เคล็ดลับ:** นักพัฒนามักเพิ่มแอตทริบิวต์พิเศษเช่น `data-testid` โดยเฉพาะสำหรับการทดสอบอัตโนมัติ สิ่งเหล่านี้คือ locators ที่ดีที่สุดที่จะใช้ เพราะมีโอกาสน้อยที่จะเปลี่ยนแปลงแม้ว่าสไตล์ของเว็บไซต์จะอัปเดต
 
-    Sometimes, the element you want to target doesn't have a good, unique locator. However, a nearby element—like its parent or a sibling—*does*. CSS Combinators let you use that nearby element as an "anchor" to find the element you need.
+??? note "Locators ขั้นสูง: ใช้ความสัมพันธ์กับ CSS Combinators"
 
-    Think of it like giving directions: "Find the big red house on the corner, and then my house is the one right next to it."
+    บางครั้ง องค์ประกอบที่คุณต้องการกำหนดเป้าหมายไม่มี locator ที่ดีและไม่ซ้ำกัน อย่างไรก็ตาม องค์ประกอบที่อยู่ใกล้เคียง เช่น element ที่เป็นพ่อแม่หรือพี่น้อง *มี* locator ที่ดี CSS Combinators ให้คุณใช้องค์ประกอบที่อยู่ใกล้เคียงนั้นเป็น "จุดยึด" เพื่อค้นหาองค์ประกอบที่คุณต้องการ
 
-    Here are the most common combinators you'll use in testing.
+    คิดเหมือนว่าให้ทิศทาง: "ค้นหาบ้านสีแดงใหญ่ที่มุม แล้วบ้านของฉันคือบ้านที่อยู่ถัดไป"
 
-    | Combinator | Name | Syntax | Example & Meaning |
+    นี่คือ combinators ที่ใช้บ่อยที่สุดที่คุณจะใช้ในการทดสอบ
+
+    | Combinator | ชื่อ | ไวยากรณ์ | ตัวอย่างและความหมาย |
     | :--- | :--- | :--- | :--- |
-    | (space) | **Descendant** | `ancestor descendant` | `div#user-profile p` <br/> *Selects any `<p>` element that is **somewhere inside** the `<div>` with the id `user-profile`. It could be a direct child, a grandchild, etc.* |
-    | `>` | **Child** | `parent > child` | `ul.main-menu > li` <br/> *Selects only `<li>` elements that are **direct children** of the `<ul>` with the class `main-menu`.* |
-    | `+` | **Adjacent Sibling** | `element + next_element` | `h2 + p` <br/> *Selects the first `<p>` element that is **immediately after** an `<h2>` element.* |
+    | (ช่องว่าง) | **Descendant (ลูกหลาน)** | `ancestor descendant` | `div#user-profile p` <br/> *เลือกองค์ประกอบ `<p>` ใด ๆ ที่อยู่ **ที่ไหนสักแห่งภายใน** `<div>` ที่มี id `user-profile` มันอาจเป็นลูกโดยตรง ลูกของลูก ฯลฯ* |
+    | `>` | **Child (ลูก)** | `parent > child` | `ul.main-menu > li` <br/> *เลือกเฉพาะองค์ประกอบ `<li>` ที่เป็น **ลูกโดยตรง** ของ `<ul>` ที่มี class `main-menu`* |
+    | `+` | **Adjacent Sibling (พี่น้องที่อยู่ติดกัน)** | `element + next_element` | `h2 + p` <br/> *เลือกองค์ประกอบ `<p>` ตัวแรกที่อยู่ **ทันทีหลัง** องค์ประกอบ `<h2>`* |
 
-    #### **When Would You Use These in a Test?**
+    #### **เมื่อไหร่ที่คุณจะใช้สิ่งเหล่านี้ในการทดสอบ?**
 
-    These are not just theoretical concepts; they solve real-world testing problems.
+    สิ่งเหล่านี้ไม่ใช่เพียงแนวคิดทางทฤษฎี พวกมันแก้ปัญหาการทดสอบในโลกแห่งความเป็นจริง
 
-    **Scenario 1: Finding a label for a specific input field.**
+    **สถานการณ์ที่ 1: การค้นหา label สำหรับฟิลด์ input เฉพาะ**
 
-    Imagine a form where the labels don't have unique IDs, but the input fields do.
+    ลองนึกภาพฟอร์มที่ labels ไม่มี IDs ที่ไม่ซ้ำกัน แต่ input fields มี
 
     ```html
     <div class="form-group">
-      <label>First Name</label>
+      <label>ชื่อจริง</label>
       <input id="first-name-input" type="text">
     </div>
     <div class="form-group">
-      <label>Last Name</label>
+      <label>นามสกุล</label>
       <input id="last-name-input" type="text">
     </div>
     ```
 
-    **Problem:** How do you verify the text of the label for the "Last Name" field?
-    **Solution:** Use the adjacent sibling combinator. But since the `label` comes *before* the `input`, you can't use `+`. Instead, you can anchor on their shared parent.
+    **ปัญหา:** คุณจะตรวจสอบข้อความ label สำหรับฟิลด์ "นามสกุล" ได้อย่างไร?
+    **วิธีแก้ไข:** ใช้ adjacent sibling combinator แต่เนื่องจาก `label` มาก่อน `input` คุณจึงไม่สามารถใช้ `+` ได้ แทนที่จะเป็นเช่นนั้น คุณสามารถยึดองค์ประกอบพ่อแม่ร่วมของพวกมันได้
 
-    *   A better approach is to find the input and then find the label relative to it (many testing tools allow this).
-    *   However, if you must use a pure CSS selector to grab the *parent* div, you could do it like this: `div:has(#last-name-input)` and then find the label within it. (Note: `:has()` is a newer, very powerful CSS feature).
+    หากคุณต้องใช้ pure CSS selector เพื่อจับ *parent* div คุณสามารถทำแบบนี้: `div:has(#last-name-input)` แล้วค้นหา label ภายในนั้น (หมายเหตุ: `:has()` เป็นคุณสมบัติ CSS ใหม่ที่ทรงพลังมาก)
 
-    Let's use a clearer example for combinators.
+    ให้ใช้ตัวอย่างที่ชัดเจนกว่าสำหรับ combinators
 
-    **Scenario 2: Clicking the "View Details" button for a specific user in a table.**
+    **สถานการณ์ที่ 2: การคลิกปุ่ม "ดูรายละเอียด" สำหรับผู้ใช้เฉพาะในตาราง**
 
-    Imagine a table of users. Each row has a username and a "View Details" button. The buttons themselves have no unique IDs.
+    ลองนึกภาพตารางของผู้ใช้ แต่ละแถวมีชื่อผู้ใช้และปุ่ม "ดูรายละเอียด" ปุ่มเองไม่มี IDs ที่ไม่ซ้ำกัน
 
     ```html
     <tr id="user-row-123">
       <td class="username">Alice</td>
       <td>alice@example.com</td>
-      <td><button class="view-details">View Details</button></td>
+      <td><button class="view-details">ดูรายละเอียด</button></td>
     </tr>
     <tr id="user-row-456">
       <td class="username">Bob</td>
       <td>bob@example.com</td>
-      <td><button class="view-details">View Details</button></td>
+      <td><button class="view-details">ดูรายละเอียด</button></td>
     </tr>
     ```
 
-    **Problem:** How do you click the "View Details" button specifically for Alice?
-    **Solution:** Use the **Descendant Combinator**. You find Alice's unique row and then find the button *descended* from it.
+    **ปัญหา:** คุณจะคลิกปุ่ม "ดูรายละเอียด" โดยเฉพาะสำหรับ Alice ได้อย่างไร?
+    **วิธีแก้ไข:** ใช้ **Descendant Combinator** คุณค้นหาแถวของ Alice ที่ไม่ซ้ำกัน แล้วค้นหาปุ่ม *ที่ลงมาจากนั้น*
 
     ```javascript
-    // "Find a button with class 'view-details' that is somewhere inside
-    //  an element with the id 'user-row-123'"
+    // "ค้นหาปุ่มที่มี class 'view-details' ที่อยู่ที่ไหนสักแห่งภายใน
+    //  องค์ประกอบที่มี id 'user-row-123'"
     const alicesButtonSelector = "#user-row-123 .view-details";
 
     await page.click(alicesButtonSelector);
     ```
 
-    **A Word of Caution:** Overusing complex combinators can lead to **brittle tests**. If a developer slightly changes the HTML structure (e.g., wraps an element in a new `<div>`), a selector like `div > a` might break, whereas a selector using a `data-testid` would not.
+    **คำเตือน:** การใช้ combinators ที่ซับซ้อนมากเกินไปอาจนำไปสู่ **การทดสอบที่เปราะบาง** ถ้านักพัฒนาเปลี่ยนแปลงโครงสร้าง HTML เล็กน้อย (เช่น ห่อองค์ประกอบใหม่ใน `<div>`) selector เช่น `div > a` อาจพัง ในขณะที่ selector ที่ใช้ `data-testid` จะไม่เสียหาย
 
-    **Verdict:** Include this section. It introduces a slightly more advanced topic in a controlled way and gives your learners a powerful tool to solve common and frustrating locator problems. It bridges the gap between "beginner" and "capable."
+    **สรุป:** ใช้คุณสมบัติ combinators เมื่อจำเป็น มันเป็นเครื่องมือที่ทรงพลังสำหรับแก้ปัญหา locator ที่พบบ่อยและน่าหงุดหงิด
 
-**Pro Tip:** Developers often add special attributes like `data-testid` specifically for automation. These are the best locators to use because they are unlikely to change even if the website's style is updated.
+### **XPath (XML Path Language)**
 
-#### **XPath (XML Path Language)**
+บางครั้ง องค์ประกอบนั้นหาได้ยากด้วย CSS Selector บางทีมันอาจไม่มี ID หรือ class ที่ไม่ซ้ำกัน XPath เป็นอีกกลยุทธ์ locator ที่ทรงพลังมากซึ่งทำงานโดยอธิบายเส้นทางไปยังองค์ประกอบผ่านโครงสร้าง HTML (DOM)
 
-Sometimes, an element is hard to find with a CSS Selector. Maybe it doesn't have a unique ID or class. XPath is another, very powerful locator strategy that works by describing the path to an element through the HTML structure (the DOM).
-
-| XPath Strategy | Description | Example Locator Code |
+| กลยุทธ์ XPath | คำอธิบาย | ตัวอย่างโค้ด Locator |
 | :--- | :--- | :--- |
-| **Attribute Match** | Finds any tag (`*`) with a specific attribute. | `//*[@id='main-login-btn']` |
-| **Find by Text** | Finds an element that contains specific, visible text. This is extremely useful but can be brittle if the text changes. | `//*[text()='Click Me']` |
-| **Contains Text** | A more flexible way to find by text. | `//*[contains(text(), 'Welcome back')]` |
+| **Attribute Match (จับคู่แอตทริบิวต์)** | ค้นหา tag ใด ๆ (`*`) ที่มีแอตทริบิวต์เฉพาะ | `//*[@id='main-login-btn']` |
+| **Find by Text (ค้นหาตามข้อความ)** | ค้นหาองค์ประกอบที่มีข้อความที่มองเห็นได้เฉพาะ สิ่งนี้มีประโยชน์อย่างมากแต่อาจเปราะบางหากข้อความเปลี่ยนแปลง | `//*[text()='Click Me']` |
+| **Contains Text (มีข้อความ)** | วิธีที่ยืดหยุ่นมากขึ้นในการค้นหาตามข้อความ | `//*[contains(text(), 'ยินดีต้อนรับกลับมา')]` |
 
-Use CSS selectors first. Only turn to XPath when you have a complex situation that CSS can't easily handle.
+ใช้ CSS selectors ก่อน หันไปใช้ XPath เฉพาะเมื่อคุณมีสถานการณ์ที่ซับซ้อนซึ่ง CSS ไม่สามารถจัดการได้อย่างง่ายดาย
 
-### **4. Async/Await: The Coffee Shop, Visualized**
+## **4. Async/Await: คำอธิบายร้านกาแฟ**
 
-As we discussed, `async/await` is how we tell our script to pause and wait for the website to finish a task before moving on. A diagram makes this concept much clearer.
+ดังที่เราได้กล่าวไป `async/await` คือวิธีที่เราบอกสคริปต์ของเราให้หยุดชั่วคราวและรอให้เว็บไซต์เสร็จภารกิจของมันก่อนที่จะไปต่อ แผนภาพช่วยทำให้แนวคิดนี้ชัดเจนขึ้นมาก
 
-#### **The Problem: A Synchronous Script (Without `await`)**
+### **ปัญหา: สคริปต์ Synchronous (ไม่มี `await`)**
 
-This script doesn't wait. It clicks the login button and *immediately* tries to find the "Welcome" message. The website hasn't had time to load the next page, so the test fails.
+สคริปต์นี้ไม่รอ มันคลิกปุ่มเข้าสู่ระบบและ *ทันที* พยายามค้นหาข้อความ "ยินดีต้อนรับ" เว็บไซต์ยังไม่มีเวลาโหลดหน้าถัดไป ดังนั้นการทดสอบจึงล้มเหลว
 
 ```mermaid
 sequenceDiagram
@@ -167,16 +169,16 @@ sequenceDiagram
     participant Test Runner
 
     Test Script->>Browser: page.click("#35;login")
-    Test Script->>Browser: Find "#35;2welcome-message"
-    Note right of Test Script: The script doesn't wait!
-    Browser->>Test Script: Error: Element not found!
-    Note left of Browser: I'm still loading the page...
-    Test Script->>Test Runner: TEST FAILED! ❌
+    Test Script->>Browser: ค้นหา "#35;welcome-message"
+    Note right of Test Script: สคริปต์ไม่รอ!
+    Browser->>Test Script: ข้อผิดพลาด: ไม่พบองค์ประกอบ!
+    Note left of Browser: ฉันยังคงโหลดหน้าอยู่...
+    Test Script->>Test Runner: การทดสอบล้มเหลว! ❌
 ```
 
-#### **The Solution: An Asynchronous Script (With `await`)**
+### **วิธีแก้ไข: สคริปต์ Asynchronous (มี `await`)**
 
-This script uses `await`. It clicks the login button and then *pauses*, waiting for the browser to signal that the command is complete (i.e., the next page has loaded). Only then does it resume and look for the "Welcome" message.
+สคริปต์นี้ใช้ `await` มันคลิกปุ่มเข้าสู่ระบบ แล้วจึง *หยุดชั่วคราว* รอให้เบราว์เซอร์ส่งสัญญาณว่าคำสั่งเสร็จสมบูรณ์ (กล่าวคือ หน้าถัดไปได้รับการโหลด) จากนั้นสคริปต์จึงดำเนินการต่อและค้นหาข้อความ "ยินดีต้อนรับ"
 
 ```mermaid
 sequenceDiagram
@@ -185,13 +187,13 @@ sequenceDiagram
     participant Test Runner
 
     Test Script->>Browser: await page.click("#35;login")
-    Note right of Test Script: Script PAUSES... ⏳<br/>Waits for browser to finish.
-    Browser->>Browser: Processes login, loads new page...
-    Browser-->>Test Script: OK, done! Page is loaded.
-    Note right of Test Script: Script RESUMES! ▶️
-    Test Script->>Browser: Find "#35;welcome-message"
-    Browser->>Test Script: Found it! Here's the element.
-    Test Script->>Test Runner: TEST PASSED! ✔️
+    Note right of Test Script: สคริปต์หยุดชั่วคราว... ⏳<br/>รอให้เบราว์เซอร์เสร็จ
+    Browser->>Browser: ประมวลผลการเข้าสู่ระบบ โหลดหน้าใหม่...
+    Browser-->>Test Script: ตกลง เสร็จแล้ว! หน้าได้รับการโหลด
+    Note right of Test Script: สคริปต์ดำเนินการต่อ! ▶️
+    Test Script->>Browser: ค้นหา "#35;welcome-message"
+    Browser->>Test Script: พบแล้ว! นี่คือองค์ประกอบ
+    Test Script->>Test Runner: การทดสอบสำเร็จ! ✔️
 ```
 
-Nearly every interaction with a webpage in a test—clicking, typing, reading text—will need the `await` keyword in front of it. This is the single most important concept for preventing flaky, unreliable tests.
+เกือบทุกการโต้ตอบกับหน้าเว็บในการทดสอบ—การคลิก การพิมพ์ การอ่านข้อความ—จะต้องใช้คีย์เวิร์ด `await` นี่คือแนวคิดที่สำคัญที่สุดเพียงแนวคิดเดียวสำหรับการป้องกันการทดสอบที่ไม่เสถียรและไม่น่าเชื่อถือ
